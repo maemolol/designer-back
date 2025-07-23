@@ -43,7 +43,7 @@ namespace main.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    category = table.Column<int>(type: "integer", nullable: false)
+                    category = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,7 +58,8 @@ namespace main.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     height_id = table.Column<Guid>(type: "uuid", nullable: false),
                     width_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    category_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    category_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

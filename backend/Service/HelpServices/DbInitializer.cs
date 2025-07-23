@@ -7,12 +7,12 @@ using System;
 
 public static class DbInitializer
 {
-    private static readonly List<Categories> RequiredCategories = new()
+    private static readonly List<category> RequiredCategories = new()
     {
-        new Categories { id = 1, name = "Cute animals" },
-        new Categories { id = 2, name = "Fairytales" },
-        new Categories { id = 3, name = "Animal planet" },
-        new Categories { id = 4, name = "Flowers" }
+        new category { id = 1, cat = "Cute animals" },
+        new category { id = 2, cat = "Fairytales" },
+        new category { id = 3, cat = "Animal planet" },
+        new category { id = 4, cat = "Flowers" }
     };
 
     public static async Task EnsureDbIsInitializedAsync(AppDbContext db)
@@ -21,11 +21,11 @@ public static class DbInitializer
 
         foreach (var categories in RequiredCategories)
         {
-            var exists = await db.Species.AnyAsync(s => s.id == categories.id);
+            var exists = await db.category.AnyAsync(s => s.id == categories.id);
             if (!exists)
             {
-                db.Species.Add(categories);
-                Console.WriteLine($"➕ Added missing category: {categories.name} (id={categories.id})");
+                db.category.Add(categories);
+                Console.WriteLine($"➕ Added missing category: {categories.cat} (id={categories.id})");
             }
         }
 

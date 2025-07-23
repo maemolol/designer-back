@@ -5,14 +5,9 @@
 );
 
 START TRANSACTION;
-CREATE TABLE "AdoptionRequests" (
-    id uuid NOT NULL,
-    pet_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    message text,
-    status text,
-    created_at timestamp with time zone NOT NULL,
-    CONSTRAINT "PK_AdoptionRequests" PRIMARY KEY (id)
+CREATE TABLE height (
+    id int PRIMARY KEY,
+    cm int
 );
 
 CREATE TABLE "AdoptionStatuses" (

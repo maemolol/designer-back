@@ -82,9 +82,12 @@ namespace main.Migrations
                     b.Property<Guid>("category_id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("name")
+                        .HasColumnType("text");
+
                     b.HasKey("id");
 
-                    b.HasIndex("height_id", "width_id", "category_id")
+                    b.HasIndex("height_id", "width_id", "category_id", "name")
                         .IsUnique();
 
                     b.ToTable("paintings", (string)null);
