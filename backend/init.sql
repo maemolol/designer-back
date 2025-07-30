@@ -32,7 +32,8 @@ CREATE TABLE paintings (
     height_id integer,
     width_id integer,
     category_id integer,
-    name text
+    name text,
+    image_link text
 );
 
 CREATE INDEX "IX_paintings_height_id" ON paintings (height_id);

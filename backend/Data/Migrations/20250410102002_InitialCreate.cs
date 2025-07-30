@@ -59,7 +59,8 @@ namespace main.Migrations
                     height_id = table.Column<Guid>(type: "uuid", nullable: false),
                     width_id = table.Column<Guid>(type: "uuid", nullable: false),
                     category_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
+                    image_link = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -28,9 +28,9 @@ public class PaintingController : ControllerBase
 	public async Task<IActionResult> GetAll([FromQuery] Guid? paintingId, [FromQuery] string? name, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
 	{
 		if (page <= 0) page = 1;
-		if (pageSize <= 0 || pageSize > 100) pageSize = 10;
+		if (pageSize <= 0 || pageSize > 100) pageSize = 16;
 
-		var query = database.paintings
+		var query = database.Paintings
 			.Include(p => p.height_id)
 			.Include(p => p.width_id)
 			.Include(p => p.category_id)
@@ -57,7 +57,7 @@ public class PaintingController : ControllerBase
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById(Guid id)
 	{
-		var picture = await database.paintings
+		var picture = await database.Paintings
 			.Include(p => p.height_id)
 			.Include(p => p.width_id)
 			.FirstOrDefaultAsync(p => p.id == id);
@@ -68,19 +68,15 @@ public class PaintingController : ControllerBase
 		return Ok(picture);
 	}
 
-	[Authorize(Roles = "site_owner")]
 	[HttpPatch("{id}")]
-	public async Task<IActionResult> Patch(Guid id, [FromBody] paintings patch)
+	public async Task<IActionResult> Patch(Guid id, [FromBody] Paintings patch)
 	{
-		var userId = GetUserId();
-		if (userId == null)
-			return Unauthorized();
-
-		var painting = await database.paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await database.Paintings.FirstOrDefaultAsync(p => p.id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 
 		if (!string.IsNullOrWhiteSpace(patch.name)) painting.name = patch.name;
+		if (!string.IsNullOrWhiteSpace(patch.image_link)) painting.image_link = patch.image_link;
 		if (patch.height_id != 0) painting.height_id = patch.height_id;
 		if (patch.width_id != 0) painting.width_id = patch.width_id;
 		if (patch.category_id != 0) painting.category_id = patch.category_id;
@@ -92,20 +88,16 @@ public class PaintingController : ControllerBase
 		return Ok(painting);
 	}
 
-	[Authorize(Roles = "site_owner")]
 	[HttpDelete("{id}")]
 	public async Task<IActionResult> Delete(Guid id)
 	{
-		var userId = GetUserId();
-		if (userId == null)
-			return Unauthorized();
 
-		var painting = await database.paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await database.Paintings.FirstOrDefaultAsync(p => p.id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 		
 		using var transaction = await database.Database.BeginTransactionAsync();
-		database.paintings.Remove(painting);
+		database.Paintings.Remove(painting);
 		await database.SaveChangesAsync();
 		await transaction.CommitAsync();
 

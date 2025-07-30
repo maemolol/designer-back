@@ -87,7 +87,12 @@ try
     Console.ResetColor();
 
     // Register services
-    builder.Services.AddDbContext<AppDbContext>(opts => opts.UseNpgsql(pgConn));
+    builder.Services.AddDbContext<AppDbContext>(opts =>
+    {
+        opts.UseNpgsql(pgConn);
+        opts.EnableSensitiveDataLogging(); // helpful for debugging
+        opts.LogTo(Console.WriteLine, LogLevel.Information);
+    });
     builder.Services.AddSingleton<IMongoClient>(mongoClient);
     builder.Services.AddSingleton(mongoDb);
     Console.WriteLine("✅ Usage: http://localhost:5000 and http://localhost:5000/swagger/");
@@ -154,18 +159,12 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Pets Parsing
-builder.Services.AddHostedService<PetImportBackgroundService>();
-builder.Services.AddScoped<PetParser>();
-builder.Services.AddScoped<BreedResolver>();
-builder.Services.AddScoped<GenderResolver>();
 builder.Services.AddSingleton<MongoService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IServiceScopeFactory>(sp => sp.GetRequiredService<IServiceScopeFactory>());
 builder.Services.AddTransient<ImageFetcher>();
 
 // Configure Paths
-string breedsPath = Path.Combine(AppContext.BaseDirectory, "Data", "Seed", "species_breeds.json");
-string keywordsPath = Path.Combine(AppContext.BaseDirectory, "Data", "Seed", "species_keywords.json");
 string logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "unknown_breeds.log");
 
 // CORS for Frontend
@@ -201,7 +200,10 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    var pending = db.Database.GetPendingMigrations();
+    Console.WriteLine("Pending migrations: " + string.Join(", ", pending));
+    var applied = db.Database.GetAppliedMigrations();
+    Console.WriteLine("Applied migrations: " + string.Join(", ", applied));
     await DbInitializer.EnsureDbIsInitializedAsync(db);
 }
 

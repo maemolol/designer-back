@@ -6,32 +6,35 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<paintings> paintings { get; set; }
-    public DbSet<height> height { get; set; }
-    public DbSet<width> width { get; set; }
-    public DbSet<category> category { get; set; }
+    public DbSet<Paintings> Paintings { get; set; }
+    public DbSet<Height> Height { get; set; }
+    public DbSet<Width> Width { get; set; }
+    public DbSet<Category> Category { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<paintings>().ToTable("paintings");
+        modelBuilder.Entity<Paintings>().ToTable("paintings");
+        modelBuilder.Entity<Height>().ToTable("height");
+        modelBuilder.Entity<Width>().ToTable("width");
+        modelBuilder.Entity<Category>().ToTable("category");
 
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<paintings>()
-            .HasOne<height>()
+        modelBuilder.Entity<Paintings>()
+            .HasOne<Height>()
             .WithMany()
             .HasForeignKey(r => r.height_id)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<paintings>()
-            .HasOne<width>()
+        modelBuilder.Entity<Paintings>()
+            .HasOne<Width>()
             .WithMany()
             .HasForeignKey(r => r.width_id)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<paintings>()
-            .HasOne<category>()
+        modelBuilder.Entity<Paintings>()
+            .HasOne<Category>()
             .WithMany()
             .HasForeignKey(r => r.category_id)
             .OnDelete(DeleteBehavior.Cascade);
@@ -40,18 +43,18 @@ public class AppDbContext : DbContext
         // WHERE, JOIN, EXISTS, ANY, FindAsync = index need
 
         // Users
-        modelBuilder.Entity<category>()
+        modelBuilder.Entity<Category>()
             .HasIndex(c => c.id).IsUnique();
 
         // Pets
 
-        modelBuilder.Entity<paintings>()
+        modelBuilder.Entity<Paintings>()
             .HasIndex(p => p.height_id).IsUnique();
 
-        modelBuilder.Entity<paintings>()
+        modelBuilder.Entity<Paintings>()
             .HasIndex(p => p.width_id).IsUnique();
 
-        modelBuilder.Entity<paintings>()
+        modelBuilder.Entity<Paintings>()
             .HasIndex(p => p.category_id);
     }
 }

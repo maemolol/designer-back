@@ -85,9 +85,12 @@ namespace main.Migrations
                     b.Property<string>("name")
                         .HasColumnType("text");
 
+                    b.Property<string>("image_link")
+                        .HasColumnType("text");
+
                     b.HasKey("id");
 
-                    b.HasIndex("height_id", "width_id", "category_id", "name")
+                    b.HasIndex("height_id", "width_id", "category_id", "name", "image_link")
                         .IsUnique();
 
                     b.ToTable("paintings", (string)null);
