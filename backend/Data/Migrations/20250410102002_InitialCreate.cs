@@ -60,14 +60,14 @@ namespace main.Migrations
                     width_id = table.Column<Guid>(type: "uuid", nullable: false),
                     category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    image_link = table.Column<string>(type: "text", nullable: false)
+                    Imagelink = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_paintings", p => p.id);
 
                     table.ForeignKey(
-                        name: "FK_paintings_height_height_id",
+                        name: "FK_paintings_height_Heightid",
                         column: x => x.height_id,
                         principalTable: "height",
                         principalColumn: "id",
@@ -93,7 +93,7 @@ namespace main.Migrations
             );
 
             migrationBuilder.CreateIndex(
-                name: "IX_paintings_height_id",
+                name: "IX_paintings_heighti_d",
                 table: "paintings",
                 column: "height_id");
 

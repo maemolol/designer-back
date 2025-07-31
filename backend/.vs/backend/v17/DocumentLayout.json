@@ -1,0 +1,243 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\controllers\\painting\\paintingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:controllers\\painting\\paintingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\controllers\\image\\imagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:controllers\\image\\imagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\data\\dbcontext\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:data\\dbcontext\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\models\\dbmodel\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:models\\dbmodel\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\init.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:init.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\data\\migrations\\20250410102002_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:data\\migrations\\20250410102002_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\data\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:data\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\data\\migrations\\20250410102002_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:data\\migrations\\20250410102002_initialcreate.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\controllers\\dummy\\dummycontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:controllers\\dummy\\dummycontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\service\\helpservices\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:service\\helpservices\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\controllers\\parsing\\resolvers\\imageresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:controllers\\parsing\\resolvers\\imageresolver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|c:\\users\\mark\\documents\\designer\\back\\backend\\init.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{5ADA2BB6-BD8A-FBBA-631C-E748BB1D8E69}|backend.csproj|solutionrelative:init.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 136,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Data\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Data\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAQwFwAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:41:14.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "20250410102002_InitialCreate.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\20250410102002_InitialCreate.Designer.cs",
+              "RelativeDocumentMoniker": "Data\\Migrations\\20250410102002_InitialCreate.Designer.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\20250410102002_InitialCreate.Designer.cs",
+              "RelativeToolTip": "Data\\Migrations\\20250410102002_InitialCreate.Designer.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAQwHAAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:40:58.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Models.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Models\\DBModel\\Models.cs",
+              "RelativeDocumentMoniker": "Models\\DBModel\\Models.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Models\\DBModel\\Models.cs",
+              "RelativeToolTip": "Models\\DBModel\\Models.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T08:28:03.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "init.sql ",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\init.sql",
+              "RelativeDocumentMoniker": "init.sql",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\init.sql",
+              "RelativeToolTip": "init.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-07-24T08:59:45.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250410102002_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\20250410102002_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Data\\Migrations\\20250410102002_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\Migrations\\20250410102002_InitialCreate.cs",
+              "RelativeToolTip": "Data\\Migrations\\20250410102002_InitialCreate.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAhwD4AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T08:58:28.695Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 264,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ImageController.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Image\\ImageController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Image\\ImageController.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Image\\ImageController.cs",
+              "RelativeToolTip": "Controllers\\Image\\ImageController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T17:13:16.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DummyContoller.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Dummy\\DummyContoller.cs",
+              "RelativeDocumentMoniker": "Controllers\\Dummy\\DummyContoller.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Dummy\\DummyContoller.cs",
+              "RelativeToolTip": "Controllers\\Dummy\\DummyContoller.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T08:15:51.524Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PaintingController.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Painting\\PaintingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Painting\\PaintingController.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Painting\\PaintingController.cs",
+              "RelativeToolTip": "Controllers\\Painting\\PaintingController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAAE0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T14:29:34.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\DbContext\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\DbContext\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Data\\DbContext\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\DbContext\\AppDbContext.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA5wCkAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-27T08:46:24.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAK4AAAAAAAAAAAAiwMQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-25T09:37:13.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ImageResolver.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Parsing\\Resolvers\\ImageResolver.cs",
+              "RelativeDocumentMoniker": "Controllers\\Parsing\\Resolvers\\ImageResolver.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Controllers\\Parsing\\Resolvers\\ImageResolver.cs",
+              "RelativeToolTip": "Controllers\\Parsing\\Resolvers\\ImageResolver.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-25T09:26:16.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Service\\HelpServices\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "Service\\HelpServices\\DbInitializer.cs",
+              "ToolTip": "C:\\Users\\mark\\Documents\\designer\\back\\backend\\Service\\HelpServices\\DbInitializer.cs",
+              "RelativeToolTip": "Service\\HelpServices\\DbInitializer.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAEwBcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T09:03:20.924Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

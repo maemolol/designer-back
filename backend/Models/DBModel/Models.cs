@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Models;
@@ -5,11 +6,23 @@ namespace Models;
 public class Paintings
 {
     public Guid id { get; set; }
-    public int? height_id { get; set; } 
-    public int? width_id { get; set; } 
-    public int? category_id { get; set; } 
+
+    [Column("height_id")]
+    public int? Heightid { get; set; } 
+    public Height? Height { get; set; }
+
+    [Column("width_id")]
+    public int? Widthid { get; set; } 
+    public Width? Width { get; set; }
+
+    [Column("category_id")]
+    public int? Categoryid { get; set; }
+    public Category? Category { get; set; }
+
     public string? name { get; set; }
-    public string? image_link { get; set; }
+
+    [Column("image_link")]
+    public string? Imagelink { get; set; }
 }
 
 public class Height

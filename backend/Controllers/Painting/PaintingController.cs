@@ -1,9 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Controllers;
 
@@ -18,23 +21,16 @@ public class PaintingController : ControllerBase
 		database = dbContext;
 	}
 
-	private Guid? GetUserId()
-	{
-		string? userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-		return Guid.TryParse(userIdString, out var id) ? id : null;
-	}
-
 	[HttpGet]
-	public async Task<IActionResult> GetAll([FromQuery] Guid? paintingId, [FromQuery] string? name, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+	public async Task<IActionResult> GetAll([FromQuery] Guid? paintingId, [FromQuery] string? name, [FromQuery] int page = 1)
 	{
+		int pageSize = 16;
 		if (page <= 0) page = 1;
-		if (pageSize <= 0 || pageSize > 100) pageSize = 16;
 
 		var query = database.Paintings
-			.Include(p => p.height_id)
-			.Include(p => p.width_id)
-			.Include(p => p.category_id)
-			.Include(p => p.name)
+			.Include(p => p.Height)
+			.Include(p => p.Width)
+			.Include(p => p.Category)
 			.AsQueryable();
 
 		if (paintingId != null)
@@ -51,15 +47,22 @@ public class PaintingController : ControllerBase
 			.Take(pageSize)
 			.ToListAsync();
 
-		return Ok(new { currentPage = page, pageSize, totalCount, totalPages, paintings });
+		try
+		{
+            return Ok(new { currentPage = page, pageSize, totalCount, totalPages, paintings });
+        }
+		catch (Exception ex)
+		{
+			return BadRequest(ex.Message);
+		}
 	}
 
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById(Guid id)
 	{
 		var picture = await database.Paintings
-			.Include(p => p.height_id)
-			.Include(p => p.width_id)
+			.Include(p => p.Height)
+			.Include(p => p.Width)
 			.FirstOrDefaultAsync(p => p.id == id);
 
 		if (picture == null)
@@ -76,10 +79,10 @@ public class PaintingController : ControllerBase
 			return NotFound("Painting not found.");
 
 		if (!string.IsNullOrWhiteSpace(patch.name)) painting.name = patch.name;
-		if (!string.IsNullOrWhiteSpace(patch.image_link)) painting.image_link = patch.image_link;
-		if (patch.height_id != 0) painting.height_id = patch.height_id;
-		if (patch.width_id != 0) painting.width_id = patch.width_id;
-		if (patch.category_id != 0) painting.category_id = patch.category_id;
+		if (!string.IsNullOrWhiteSpace(patch.Imagelink)) painting.Imagelink = patch.Imagelink;
+		if (patch.Heightid != null) painting.Heightid = patch.Heightid;
+		if (patch.Widthid != null) painting.Widthid = patch.Widthid;
+		if (patch.Categoryid != null) painting.Categoryid = patch.Categoryid;
 
 		using var transaction = await database.Database.BeginTransactionAsync();
 		await database.SaveChangesAsync();

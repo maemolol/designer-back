@@ -20,7 +20,7 @@ CREATE TABLE category (
     cat text NOT NULL
 );
 
-INSERT INTO category (id, cat) VALUES
+INSERT INTO category CAte(id, cat) VALUES
   (1, 'Cute animals'),
   (2, 'Fairytales'),
   (3, 'Animal planet'),

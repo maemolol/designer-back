@@ -1,5 +1,6 @@
-using Microsoft.Extensions.Configuration;
+using AngleSharp.Dom;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Models;
 
 public class AppDbContext : DbContext
@@ -21,23 +22,28 @@ public class AppDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Paintings>()
-            .HasOne<Height>()
-            .WithMany()
-            .HasForeignKey(r => r.height_id)
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Paintings> (entity =>
+        {
+            entity.Property(p => p.Heightid).HasColumnName("height_id");
+            entity.Property(p => p.Widthid).HasColumnName("width_id");
+            entity.Property(p => p.Categoryid).HasColumnName("category_id");
+            entity.Property(p => p.Imagelink).HasColumnName("image_link");
 
-        modelBuilder.Entity<Paintings>()
-            .HasOne<Width>()
-            .WithMany()
-            .HasForeignKey(r => r.width_id)
-            .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(p => p.Height)
+                .WithMany()
+                .HasForeignKey(r => r.Heightid)
+                .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Paintings>()
-            .HasOne<Category>()
-            .WithMany()
-            .HasForeignKey(r => r.category_id)
-            .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(p => p.Width)
+                .WithMany()
+                .HasForeignKey(r => r.Widthid)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(r => r.Categoryid)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
 
         // INDEXES
         // WHERE, JOIN, EXISTS, ANY, FindAsync = index need
@@ -49,12 +55,12 @@ public class AppDbContext : DbContext
         // Pets
 
         modelBuilder.Entity<Paintings>()
-            .HasIndex(p => p.height_id).IsUnique();
+            .HasIndex(p => p.Heightid).IsUnique();
 
         modelBuilder.Entity<Paintings>()
-            .HasIndex(p => p.width_id).IsUnique();
+            .HasIndex(p => p.Widthid).IsUnique();
 
         modelBuilder.Entity<Paintings>()
-            .HasIndex(p => p.category_id);
+            .HasIndex(p => p.Categoryid);
     }
 }
