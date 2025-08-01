@@ -22,7 +22,7 @@ public class PaintingController : ControllerBase
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetAll([FromQuery] Guid? paintingId, [FromQuery] string? name, [FromQuery] int page = 1)
+	public async Task<IActionResult> GetAll([FromQuery] Guid? paintingId, [FromQuery] string? name, [FromQuery] int page = 1, int category = 1)
 	{
 		int pageSize = 16;
 		if (page <= 0) page = 1;
@@ -41,11 +41,13 @@ public class PaintingController : ControllerBase
 		int totalCount = await query.CountAsync();
 		int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-		var paintings = await query
+		var unfilteredPaintings = await query
 			.OrderByDescending(p => p.id)
 			.Skip((page - 1) * pageSize)
 			.Take(pageSize)
 			.ToListAsync();
+
+		var paintings = unfilteredPaintings.Where(p => p.Categoryid == category);
 
 		try
 		{
