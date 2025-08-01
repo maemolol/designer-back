@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using MongoDB.Driver.GridFS;
-using MongoDB.Driver;
+using Microsoft.AspNetCore.StaticFiles;
 using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 using System;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Controllers
 {
@@ -12,52 +14,37 @@ namespace Controllers
 
     public class ImageController : ControllerBase
     {
-        private readonly GridFSBucket _bucket;
+        private readonly IMongoCollection<ImageRecord> _imageCollection;
 
         public ImageController(IMongoDatabase mongoDatabase)
         {
-            _bucket = new GridFSBucket(mongoDatabase);
+            _imageCollection = mongoDatabase.GetCollection<ImageRecord>("images");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetImageById(string id)
         {
-            ObjectId objectId;
-
-            if (!ObjectId.TryParse(id, out objectId))
+            var image = await _imageCollection.Find(x => x.ImageId == id).FirstOrDefaultAsync();
+            if (image == null)
             {
-                if (Guid.TryParse(id, out Guid guid))
-                {
-                    try
-                    {
-                        var bytes = guid.ToByteArray();
-                        objectId = new ObjectId(bytes[..12]);
-                    }
-                    catch
-                    {
-                        return BadRequest("❌ Failed to convert Guid to ObjectId.");
-                    }
-                }
-                else
-                {
-                    return BadRequest("❌ Invalid image ID format.");
-                }
+                return NotFound("Image metadata not found.");
             }
 
-            try
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), image.FilePath);
+            if (!System.IO.File.Exists(fullPath))
             {
-                var stream = await _bucket.OpenDownloadStreamAsync(objectId);
-                return File(stream, "image/jpeg");
+                return NotFound("Image file not found on disk.");
             }
-            catch (GridFSFileNotFoundException)
+
+            // Determine MIME type
+            var provider = new FileExtensionContentTypeProvider();
+            if (!provider.TryGetContentType(fullPath, out var contentType))
             {
-                return NotFound("❌ Image not found.");
+                contentType = "application/octet-stream";
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Error while fetching image: " + ex.Message);
-                return StatusCode(500, "❌ Internal server error.");
-            }
+
+            var bytes = await System.IO.File.ReadAllBytesAsync(fullPath);
+            return File(bytes, contentType);
         }
     }
 }
