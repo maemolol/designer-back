@@ -38,18 +38,20 @@ public class PaintingController : ControllerBase
 		if (!string.IsNullOrWhiteSpace(name))
 			query = query.Where(p => p.name != null && p.name.ToLower().Contains(name.ToLower()));
 
-		int totalCount = await query.CountAsync();
-		int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-
 		var unfilteredPaintings = await query
 			.OrderByDescending(p => p.id)
-			.Skip((page - 1) * pageSize)
-			.Take(pageSize)
 			.ToListAsync();
 
-		var paintings = unfilteredPaintings.Where(p => p.Categoryid == category);
+		var uncountedPaintings = unfilteredPaintings.Where(p => p.Categoryid == category);
 
-		try
+        int totalCount = uncountedPaintings.Count();
+        int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+		var paintings = uncountedPaintings
+			.Skip((page - 1) * pageSize)
+			.Take(pageSize);
+
+        try
 		{
             return Ok(new { currentPage = page, pageSize, totalCount, totalPages, paintings });
         }
