@@ -3,4 +3,4 @@ obj/
 
 *.md
 *.db
-backend/Logs
+Logs

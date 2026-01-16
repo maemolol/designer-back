@@ -13,25 +13,22 @@ using System.Text;
 using DotNetEnv;
 using Config;
 using Models;
+using Microsoft.Extensions.Configuration;
 
 Console.OutputEncoding = Encoding.UTF8;
 // For Self:
-var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
+/*var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
 Env.Load(Path.Combine(solutionRoot, ".env"));
 Console.WriteLine("✅ .env downloaded from: " + Path.Combine(solutionRoot, ".env"));
 
 // For Docker:
-Env.Load(".env");
+Env.Load(".env");*/
 
 var builder = WebApplication.CreateBuilder(args);
 
 try
 {
     // Load env vars
-    string? dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-    string? dbName = Environment.GetEnvironmentVariable("DB_NAME");
-    string? dbUser = Environment.GetEnvironmentVariable("DB_USER");
-    string? dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
     string? mongoUri = Environment.GetEnvironmentVariable("MONGO_URI");
     string? jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
     string? jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
@@ -56,27 +53,11 @@ try
     }
 
     // Validate required vars
-    Check(dbHost, "DB_HOST");
-    Check(dbName, "DB_NAME");
-    Check(dbUser, "DB_USER");
-    Check(dbPassword, "DB_PASSWORD");
     Check(mongoUri, "MONGO_URI");
     Check(jwtKey, "JWT_KEY");
     Check(jwtIssuer, "JWT_ISSUER");
     Check(jwtAudience, "JWT_AUDIENCE");
     Check(encryptionKey, "ENCRYPTION_KEY");
-
-    // PostgreSQL test
-    var pgConn = $"Host={dbHost};Database={dbName};Username={dbUser};Password={dbPassword}";
-    using (var pg = new Npgsql.NpgsqlConnection(pgConn))
-    {
-        pg.Open();
-        using var cmd = new Npgsql.NpgsqlCommand("SELECT 1", pg);
-        cmd.ExecuteScalar();
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("✅ PostgreSQL connection OK.");
-        Console.ResetColor();
-    }
 
     // MongoDB test
     var mongoClient = new MongoClient(mongoUri);
@@ -89,7 +70,10 @@ try
     // Register services
     builder.Services.AddDbContext<AppDbContext>(opts =>
     {
-        opts.UseNpgsql(pgConn);
+        opts.UseNpgsql(
+            builder.Configuration.GetConnectionString("Default"),
+            npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
+        );
         opts.EnableSensitiveDataLogging(); // helpful for debugging
         opts.LogTo(Console.WriteLine, LogLevel.Information);
     });
