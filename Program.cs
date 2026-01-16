@@ -10,19 +10,17 @@ using System.Security.Claims;
 using MongoDB.Driver;
 using ImageFetchers;
 using System.Text;
-using DotNetEnv;
 using Config;
-using Models;
 using Microsoft.Extensions.Configuration;
 
 Console.OutputEncoding = Encoding.UTF8;
-// For Self:
-/*var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
+/* // For Self:
+var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
 Env.Load(Path.Combine(solutionRoot, ".env"));
 Console.WriteLine("✅ .env downloaded from: " + Path.Combine(solutionRoot, ".env"));
 
 // For Docker:
-Env.Load(".env");*/
+Env.Load(".env"); */
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -115,7 +113,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Controllers и Swagger
+// Controllers and Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -142,21 +140,24 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Pets Parsing
+// Image Parsing
 builder.Services.AddSingleton<MongoService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IServiceScopeFactory>(sp => sp.GetRequiredService<IServiceScopeFactory>());
 builder.Services.AddTransient<ImageFetcher>();
 
 // Configure Paths
-string logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "unknown_breeds.log");
+string logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "running_log.log");
 
 // CORS for Frontend
+var frontendOrigin = Environment.GetEnvironmentVariable("ALLOWED_FRONTEND_PORT") ?? "http://localhost:3000";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("FrontendOnly", policy =>
     {
-        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        policy.WithOrigins(frontendOrigin)
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -170,10 +171,12 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseCors("AllowAll");
+app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+app.UseCors("FrontendOnly");
 app.UseSwagger();
 app.UseSwaggerUI();
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -183,16 +186,23 @@ app.MapControllers();
 // Auto migrate and seed species
 using (var scope = app.Services.CreateScope())
 {
+    try {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     var pending = db.Database.GetPendingMigrations();
     Console.WriteLine("Pending migrations: " + string.Join(", ", pending));
     var applied = db.Database.GetAppliedMigrations();
     Console.WriteLine("Applied migrations: " + string.Join(", ", applied));
     await DbInitializer.EnsureDbIsInitializedAsync(db);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Migration failed: {ex.Message}");
+        throw;
+    }
 }
 
 // Run the application locally
 // app.Run();
 
 // Run the application locally in docker or on a server
-app.Run("http://0.0.0.0:5000");
+app.Run($"http://0.0.0.0:{port}");
