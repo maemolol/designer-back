@@ -13,7 +13,7 @@ public class MongoService
     // Initializes MongoDB connection and sets up GridFS bucket
     public MongoService()
     {
-        var connectionString = Environment.GetEnvironmentVariable("MONGO_URI") ?? "mongodb://localhost:27017";
+        var connectionString = Environment.GetEnvironmentVariable("MONGO_URI") ?? "mongodb://mongo:27017";
         var client = new MongoClient(connectionString);
         _database = client.GetDatabase("PaintingsMedia");
         _bucket = new GridFSBucket(_database);
