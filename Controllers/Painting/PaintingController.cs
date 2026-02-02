@@ -1,3 +1,4 @@
+using Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -75,7 +76,15 @@ public class PaintingController : ControllerBase
 		return Ok(picture);
 	}
 
-	[HttpPatch("{id}")]
+	[HttpPost("add")]
+	public async Task<IActionResult> CreatePainting([FromBody] PaintingAddDto request)
+	{
+		Console.WriteLine($"Raw name from the request: {request.name}");
+		if(request == null) return BadRequest(new {error = "Body required."});
+		return Ok();
+	}
+
+	[HttpPatch("{id}/edit")]
 	public async Task<IActionResult> Patch(Guid id, [FromBody] Paintings patch)
 	{
 		var painting = await database.Paintings.FirstOrDefaultAsync(p => p.id == id);
