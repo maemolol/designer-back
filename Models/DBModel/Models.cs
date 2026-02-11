@@ -40,5 +40,5 @@ public class Width
 public class Category
 {
     public int id { get; set; }
-    public string? cat { get; set; } // species name
+    public string? cat { get; set; } // category name
 }
