@@ -81,7 +81,30 @@ public class PaintingController : ControllerBase
 	{
 		Console.WriteLine($"Raw name from the request: {request.name}");
 		if(request == null) return BadRequest(new {error = "Body required."});
-		return Ok();
+		if(request.category_id == null) return BadRequest(new {error = "Category ID required."});
+		if(string.IsNullOrWhiteSpace(request.image_link)) return BadRequest(new {error = "Image link required."});
+
+		var name = (request.name ?? "untitled").Trim();
+
+		try{
+			if(await database.Paintings.AnyAsync(p => p.name == name))
+				return Conflict(new {error = "Painting with this name already exists."});
+			var painting = new Paintings
+			{
+				Heightid = request.height_id,
+				Widthid = request.width_id,
+				Categoryid = request.category_id,
+				name = name,
+				Imagelink = request.image_link
+			};
+			database.Paintings.Add(painting);
+			await database.SaveChangesAsync();
+
+			return Ok();
+		} catch (Exception ex)
+		{
+			return BadRequest (new {error = ex.Message});
+		}
 	}
 
 	[HttpPatch("{id}/edit")]
