@@ -144,7 +144,6 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddSingleton<MongoService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IServiceScopeFactory>(sp => sp.GetRequiredService<IServiceScopeFactory>());
-builder.Services.AddTransient<ImageFetcher>();
 
 // Configure Paths
 string logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "running_log.log");
