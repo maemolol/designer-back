@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 using MongoDB.Driver;
-using ImageFetchers;
 using System.Text;
 using Config;
 using Microsoft.Extensions.Configuration;
