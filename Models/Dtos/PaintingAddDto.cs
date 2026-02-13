@@ -7,4 +7,5 @@ public class PaintingAddDto
     public int? category_id {get; set;}
     public string? name {get; set;}
     public string? image_link {get; set;}
+    public string? image_path {get; set;}
 }

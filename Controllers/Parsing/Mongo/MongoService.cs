@@ -23,10 +23,10 @@ public class MongoService
         return new GridFSBucket(_database);
     }
 
-    public async Task<ObjectId> SaveImageAsync(byte[] data)
+    public async Task<ObjectId> SaveImageAsync(string image_link, byte[] data)
     {
         using var stream = new MemoryStream(data); // Wrap byte array in stream
-        var id = await _bucket.UploadFromStreamAsync(Guid.NewGuid().ToString(), stream); // Store file with random name
+        var id = await _bucket.UploadFromStreamAsync(image_link, stream); // Store file with random name
         return id;
     }
 

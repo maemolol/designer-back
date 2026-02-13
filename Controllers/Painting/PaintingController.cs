@@ -15,11 +15,13 @@ namespace Controllers;
 [Route("paintings")]
 public class PaintingController : ControllerBase
 {
-	private readonly AppDbContext database;
+	private readonly AppDbContext _context;
+	private MongoService _mongo;
 
-	public PaintingController(AppDbContext dbContext)
+	public PaintingController(AppDbContext dbContext, MongoService mongo)
 	{
-		database = dbContext;
+		_context = dbContext;
+		_mongo = mongo;
 	}
 
 	[HttpGet]
@@ -28,7 +30,7 @@ public class PaintingController : ControllerBase
 		int pageSize = 16;
 		if (page <= 0) page = 1;
 
-		var query = database.Paintings
+		var query = _context.Paintings
 			.Include(p => p.Height)
 			.Include(p => p.Width)
 			.Include(p => p.Category)
@@ -65,7 +67,7 @@ public class PaintingController : ControllerBase
 	[HttpGet("{id}")]
 	public async Task<IActionResult> GetById(Guid id)
 	{
-		var picture = await database.Paintings
+		var picture = await _context.Paintings
 			.Include(p => p.Height)
 			.Include(p => p.Width)
 			.FirstOrDefaultAsync(p => p.id == id);
@@ -85,9 +87,10 @@ public class PaintingController : ControllerBase
 		if(string.IsNullOrWhiteSpace(request.image_link)) return BadRequest(new {error = "Image link required."});
 
 		var name = (request.name ?? "untitled").Trim();
+		byte[] raw_image = System.IO.File.ReadAllBytes(request.image_path);
 
 		try{
-			if(await database.Paintings.AnyAsync(p => p.name == name))
+			if(await _context.Paintings.AnyAsync(p => p.name == name))
 				return Conflict(new {error = "Painting with this name already exists."});
 			var painting = new Paintings
 			{
@@ -97,20 +100,23 @@ public class PaintingController : ControllerBase
 				name = name,
 				Imagelink = request.image_link
 			};
-			database.Paintings.Add(painting);
-			await database.SaveChangesAsync();
+			_context.Paintings.Add(painting);
+			await _context.SaveChangesAsync();
 
-			return Ok();
+			_mongo.SaveImageAsync(request.image_link, raw_image);
+			
+			var message = $"Painting {request.name} was added";
+			return Ok(new {message});
 		} catch (Exception ex)
 		{
-			return BadRequest (new {error = ex.Message});
+			return StatusCode (500, new {error = ex.Message});
 		}
 	}
 
 	[HttpPatch("{id}/edit")]
 	public async Task<IActionResult> Patch(Guid id, [FromBody] Paintings patch)
 	{
-		var painting = await database.Paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 
@@ -120,8 +126,8 @@ public class PaintingController : ControllerBase
 		if (patch.Widthid != null) painting.Widthid = patch.Widthid;
 		if (patch.Categoryid != null) painting.Categoryid = patch.Categoryid;
 
-		using var transaction = await database.Database.BeginTransactionAsync();
-		await database.SaveChangesAsync();
+		using var transaction = await _context.Database.BeginTransactionAsync();
+		await _context.SaveChangesAsync();
 		await transaction.CommitAsync();
 
 		return Ok(painting);
@@ -131,13 +137,13 @@ public class PaintingController : ControllerBase
 	public async Task<IActionResult> Delete(Guid id)
 	{
 
-		var painting = await database.Paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 		
-		using var transaction = await database.Database.BeginTransactionAsync();
-		database.Paintings.Remove(painting);
-		await database.SaveChangesAsync();
+		using var transaction = await _context.Database.BeginTransactionAsync();
+		_context.Paintings.Remove(painting);
+		await _context.SaveChangesAsync();
 		await transaction.CommitAsync();
 
 		return Ok("Painting deleted.");
