@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "u6Mce+pfMss=",
+  "dgSpecHash": "E+xOKmyYaks=",
   "success": true,
   "projectFilePath": "/home/maemo/designer/designer-back/backend.csproj",
   "expectedPackageFiles": [
     "/home/maemo/.nuget/packages/anglesharp/1.3.0/anglesharp.1.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/home/maemo/.nuget/packages/bouncycastle.cryptography/2.6.2/bouncycastle.cryptography.2.6.2.nupkg.sha512",
     "/home/maemo/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/home/maemo/.nuget/packages/dotnetenv/3.1.1/dotnetenv.3.1.1.nupkg.sha512",
     "/home/maemo/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/home/maemo/.nuget/packages/mailkit/4.15.0/mailkit.4.15.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.0/microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.http/2.3.0/microsoft.aspnetcore.http.2.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.3.0/microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
@@ -57,6 +59,7 @@
     "/home/maemo/.nuget/packages/microsoft.net.http.headers/2.3.0/microsoft.net.http.headers.2.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.openapi/1.6.23/microsoft.openapi.1.6.23.nupkg.sha512",
+    "/home/maemo/.nuget/packages/mimekit/4.15.0/mimekit.4.15.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/mongodb.bson/3.4.0/mongodb.bson.3.4.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/mongodb.driver/3.4.0/mongodb.driver.3.4.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
@@ -78,7 +81,21 @@
     "/home/maemo/.nuget/packages/system.composition.runtime/7.0.0/system.composition.runtime.7.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/system.composition.typedparts/7.0.0/system.composition.typedparts.7.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/system.identitymodel.tokens.jwt/6.34.0/system.identitymodel.tokens.jwt.6.34.0.nupkg.sha512",
+    "/home/maemo/.nuget/packages/system.security.cryptography.pkcs/10.0.0/system.security.cryptography.pkcs.10.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/zstdsharp.port/0.7.3/zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'MimeKit' 4.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g7hc-96xr-gvvx",
+      "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/maemo/designer/designer-back/backend.csproj",
+      "libraryId": "MimeKit",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

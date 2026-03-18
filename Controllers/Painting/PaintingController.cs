@@ -37,12 +37,12 @@ public class PaintingController : ControllerBase
 			.AsQueryable();
 
 		if (paintingId != null)
-			query = query.Where(p => p.id == paintingId);
+			query = query.Where(p => p.Id == paintingId);
 		if (!string.IsNullOrWhiteSpace(name))
-			query = query.Where(p => p.name != null && p.name.ToLower().Contains(name.ToLower()));
+			query = query.Where(p => p.Name != null && p.Name.ToLower().Contains(name.ToLower()));
 
 		var unfilteredPaintings = await query
-			.OrderByDescending(p => p.id)
+			.OrderByDescending(p => p.Id)
 			.ToListAsync();
 
 		var uncountedPaintings = unfilteredPaintings.Where(p => p.Categoryid == category);
@@ -70,7 +70,7 @@ public class PaintingController : ControllerBase
 		var picture = await _context.Paintings
 			.Include(p => p.Height)
 			.Include(p => p.Width)
-			.FirstOrDefaultAsync(p => p.id == id);
+			.FirstOrDefaultAsync(p => p.Id == id);
 
 		if (picture == null)
 			return NotFound("Painting not found.");
@@ -90,14 +90,14 @@ public class PaintingController : ControllerBase
 		byte[] raw_image = System.IO.File.ReadAllBytes(request.image_path);
 
 		try{
-			if(await _context.Paintings.AnyAsync(p => p.name == name))
+			if(await _context.Paintings.AnyAsync(p => p.Name == name))
 				return Conflict(new {error = "Painting with this name already exists."});
 			var painting = new Paintings
 			{
 				Heightid = request.height_id,
 				Widthid = request.width_id,
 				Categoryid = request.category_id,
-				name = name,
+				Name = name,
 				Imagelink = request.image_link
 			};
 			_context.Paintings.Add(painting);
@@ -116,11 +116,11 @@ public class PaintingController : ControllerBase
 	[HttpPatch("{id}/edit")]
 	public async Task<IActionResult> Patch(Guid id, [FromBody] Paintings patch)
 	{
-		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.Id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 
-		if (!string.IsNullOrWhiteSpace(patch.name)) painting.name = patch.name;
+		if (!string.IsNullOrWhiteSpace(patch.Name)) painting.Name = patch.Name;
 		if (!string.IsNullOrWhiteSpace(patch.Imagelink)) painting.Imagelink = patch.Imagelink;
 		if (patch.Heightid != null) painting.Heightid = patch.Heightid;
 		if (patch.Widthid != null) painting.Widthid = patch.Widthid;
@@ -137,7 +137,7 @@ public class PaintingController : ControllerBase
 	public async Task<IActionResult> Delete(Guid id)
 	{
 
-		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.id == id);
+		var painting = await _context.Paintings.FirstOrDefaultAsync(p => p.Id == id);
 		if (painting == null)
 			return NotFound("Painting not found.");
 		

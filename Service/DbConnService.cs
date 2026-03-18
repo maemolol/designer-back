@@ -11,7 +11,7 @@ public class DbConnectionService
         if (!string.IsNullOrWhiteSpace(_cached))
             return _cached!;
 
-        var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+        var envPath = Path.Combine(Directory.GetCurrentDirectory(), "../.env");
         if (File.Exists(envPath))
         {
             try { Env.Load(envPath); }

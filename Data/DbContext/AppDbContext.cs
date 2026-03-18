@@ -28,6 +28,8 @@ public class AppDbContext : DbContext
             entity.Property(p => p.Widthid).HasColumnName("width_id");
             entity.Property(p => p.Categoryid).HasColumnName("category_id");
             entity.Property(p => p.Imagelink).HasColumnName("image_link");
+            entity.Property(p => p.Price).HasColumnName("price");
+            entity.Property(p => p.Sold).HasColumnName("sold");
 
             entity.HasOne(p => p.Height)
                 .WithMany()
@@ -52,13 +54,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Category>()
             .HasIndex(c => c.id).IsUnique();
 
-        // Pets
+        // Paintings
 
         modelBuilder.Entity<Paintings>()
-            .HasIndex(p => p.Heightid).IsUnique();
+            .HasKey(p => p.Id);
 
         modelBuilder.Entity<Paintings>()
-            .HasIndex(p => p.Widthid).IsUnique();
+            .HasIndex(p => p.Heightid);
+
+        modelBuilder.Entity<Paintings>()
+            .HasIndex(p => p.Widthid);
 
         modelBuilder.Entity<Paintings>()
             .HasIndex(p => p.Categoryid);

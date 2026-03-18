@@ -5,7 +5,8 @@ namespace Models;
 
 public class Paintings
 {
-    public Guid id { get; set; }
+    [Column("id")]
+    public Guid Id { get; set; }
 
     [Column("height_id")]
     public int? Heightid { get; set; } 
@@ -19,10 +20,17 @@ public class Paintings
     public int? Categoryid { get; set; }
     public Category? Category { get; set; }
 
-    public string? name { get; set; }
+    [Column("name")]
+    public string? Name { get; set; }
 
     [Column("image_link")]
     public string? Imagelink { get; set; }
+
+    [Column("price")]
+    public float? Price {get; set;}
+
+    [Column("sold")]
+    public bool Sold { get; set; }
 }
 
 public class Height

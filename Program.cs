@@ -10,16 +10,17 @@ using System.Security.Claims;
 using MongoDB.Driver;
 using System.Text;
 using Config;
+using DotNetEnv;
 using Microsoft.Extensions.Configuration;
 
 Console.OutputEncoding = Encoding.UTF8;
-/* // For Self:
+// For Self:
 var solutionRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
 Env.Load(Path.Combine(solutionRoot, ".env"));
 Console.WriteLine("✅ .env downloaded from: " + Path.Combine(solutionRoot, ".env"));
 
 // For Docker:
-Env.Load(".env"); */
+Env.Load(".env");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,7 @@ try
 
     // MongoDB test
     var mongoClient = new MongoClient(mongoUri);
-    var mongoDb = mongoClient.GetDatabase("PaintingsMedia");
+    var mongoDb = mongoClient.GetDatabase("PaintingsCollection");
     mongoDb.RunCommandAsync((Command<MongoDB.Bson.BsonDocument>)"{ping:1}").Wait();
     Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("✅ MongoDB connection OK.");
@@ -72,7 +73,7 @@ try
             npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
         );
         opts.EnableSensitiveDataLogging(); // helpful for debugging
-        opts.LogTo(Console.WriteLine, LogLevel.Information);
+        opts.LogTo(Console.WriteLine, LogLevel.Debug);
     });
     builder.Services.AddSingleton<IMongoClient>(mongoClient);
     builder.Services.AddSingleton(mongoDb);
@@ -114,6 +115,7 @@ builder.Services.AddAuthentication(options =>
 
 // Controllers and Swagger
 builder.Services.AddControllers();
+builder.Services.AddScoped<EmailService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -149,7 +151,7 @@ string logPath = Path.Combine(AppContext.BaseDirectory, "Logs", "running_log.log
 
 // CORS for Frontend
 var frontendOrigin = Environment.GetEnvironmentVariable("ALLOWED_FRONTEND_PORT") ?? "http://localhost:3000";
-builder.Services.AddCors(options =>
+/* builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendOnly", policy =>
     {
@@ -157,10 +159,19 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
+}); */
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 });
+
 
 // Logging off
 builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
@@ -169,35 +180,52 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-app.UseCors("FrontendOnly");
-app.UseSwagger();
-app.UseSwaggerUI();
-
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.UseRouting();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//app.UseCors("AllowAll");
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 
 // Auto migrate and seed species
 using (var scope = app.Services.CreateScope())
 {
-    try {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var pending = db.Database.GetPendingMigrations();
-    Console.WriteLine("Pending migrations: " + string.Join(", ", pending));
-    var applied = db.Database.GetAppliedMigrations();
-    Console.WriteLine("Applied migrations: " + string.Join(", ", applied));
-    await DbInitializer.EnsureDbIsInitializedAsync(db);
+    try
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        
+        // Check if there are pending migrations
+        var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+        
+        if (pendingMigrations.Any())
+        {
+            Console.WriteLine($"📦 Found {pendingMigrations.Count()} pending migration(s). Applying...");
+            foreach (var migration in pendingMigrations)
+            {
+                Console.WriteLine($"   - {migration}");
+            }
+            
+            await dbContext.Database.MigrateAsync();
+            Console.WriteLine("✅ Database migrations applied successfully");
+        }
+        else
+        {
+            Console.WriteLine("✅ Database is up to date. No migrations needed.");
+        }
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Migration failed: {ex.Message}");
+        Console.WriteLine($"❌ Migration failed: {ex.Message}");
         throw;
     }
 }
+
 
 // Run the application locally
 // app.Run();
