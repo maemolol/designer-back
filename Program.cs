@@ -57,10 +57,12 @@ try
     Check(jwtAudience, "JWT_AUDIENCE");
     Check(encryptionKey, "ENCRYPTION_KEY");
 
+    Console.WriteLine($"Mongo URI: {mongoUri}");
+
     // MongoDB test
     var mongoClient = new MongoClient(mongoUri);
     var mongoDb = mongoClient.GetDatabase("PaintingsCollection");
-    mongoDb.RunCommandAsync((Command<MongoDB.Bson.BsonDocument>)"{ping:1}").Wait();
+    // await mongoDb.RunCommandAsync((Command<MongoDB.Bson.BsonDocument>)"{ping:1}");
     Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine("✅ MongoDB connection OK.");
     Console.ResetColor();

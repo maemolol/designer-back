@@ -8,7 +8,6 @@ COPY . .
 # Create initial migration and database if it doesn't exist
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet tool install --global dotnet-ef || true
-RUN dotnet ef migrations add InitialCreate --no-build || true
 
 RUN dotnet publish -c Release -o /app/publish
 
