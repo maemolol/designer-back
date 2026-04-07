@@ -1,3 +1,5 @@
+namespace Dtos;
+
 public class BasketRequest
 {
     public string? Email { get; set; }

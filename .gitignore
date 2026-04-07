@@ -2,6 +2,7 @@ backend/bin/
 backend/obj/
 backend/Logs
 .env
+Data/paintings.json
 
 .vscode/
 *.user

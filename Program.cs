@@ -198,33 +198,42 @@ app.MapControllers();
 // Auto migrate and seed species
 using (var scope = app.Services.CreateScope())
 {
-    try
+    var retries = 10;
+    var delay = TimeSpan.FromSeconds(2);
+
+    while (retries > 0)
     {
-        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        
-        // Check if there are pending migrations
-        var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
-        
-        if (pendingMigrations.Any())
+        try
         {
-            Console.WriteLine($"📦 Found {pendingMigrations.Count()} pending migration(s). Applying...");
-            foreach (var migration in pendingMigrations)
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            Console.WriteLine("🔄 Checking database...");
+
+            var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+
+            if (pendingMigrations.Any())
             {
-                Console.WriteLine($"   - {migration}");
+                Console.WriteLine($"📦 Applying {pendingMigrations.Count()} migrations...");
+                await dbContext.Database.MigrateAsync();
             }
-            
-            await dbContext.Database.MigrateAsync();
-            Console.WriteLine("✅ Database migrations applied successfully");
+            else
+            {
+                Console.WriteLine("✅ Database up to date.");
+            }
+
+            break; // success
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("✅ Database is up to date. No migrations needed.");
+            retries--;
+
+            Console.WriteLine($"⏳ DB not ready yet: {ex.Message}");
+
+            if (retries == 0)
+                throw;
+
+            await Task.Delay(delay);
         }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"❌ Migration failed: {ex.Message}");
-        throw;
     }
 }
 

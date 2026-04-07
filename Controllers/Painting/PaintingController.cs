@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +19,13 @@ public class PaintingController : ControllerBase
 {
 	private readonly AppDbContext _context;
 	private MongoService _mongo;
+	private IMongoCollection<BsonDocument> _mDb;
 
-	public PaintingController(AppDbContext dbContext, MongoService mongo)
+	public PaintingController(AppDbContext dbContext, MongoService mongo, IMongoDatabase mDb)
 	{
 		_context = dbContext;
 		_mongo = mongo;
+		_mDb = mDb.GetCollection<BsonDocument>("images");
 	}
 
 	[HttpGet]
@@ -79,38 +83,58 @@ public class PaintingController : ControllerBase
 	}
 
 	[HttpPost("add")]
-	public async Task<IActionResult> CreatePainting([FromBody] PaintingAddDto request)
+	public async Task<IActionResult> CreatePainting([FromBody] CreatePaintingDto dto)
 	{
-		Console.WriteLine($"Raw name from the request: {request.name}");
-		if(request == null) return BadRequest(new {error = "Body required."});
-		if(request.category_id == null) return BadRequest(new {error = "Category ID required."});
-		if(string.IsNullOrWhiteSpace(request.image_link)) return BadRequest(new {error = "Image link required."});
+		var strategy = _context.Database.CreateExecutionStrategy();
 
-		var name = (request.name ?? "untitled").Trim();
-		byte[] raw_image = System.IO.File.ReadAllBytes(request.image_path);
-
-		try{
-			if(await _context.Paintings.AnyAsync(p => p.Name == name))
-				return Conflict(new {error = "Painting with this name already exists."});
-			var painting = new Paintings
-			{
-				Heightid = request.height_id,
-				Widthid = request.width_id,
-				Categoryid = request.category_id,
-				Name = name,
-				Imagelink = request.image_link
-			};
-			_context.Paintings.Add(painting);
-			await _context.SaveChangesAsync();
-
-			_mongo.SaveImageAsync(request.image_link, raw_image);
-			
-			var message = $"Painting {request.name} was added";
-			return Ok(new {message});
-		} catch (Exception ex)
+		return await strategy.ExecuteAsync(async () =>
 		{
-			return StatusCode (500, new {error = ex.Message});
-		}
+			await using var transaction = await _context.Database.BeginTransactionAsync();
+
+			try
+			{
+				// Create Postgres entity
+				var painting = new Paintings
+				{
+					Id = Guid.NewGuid(),
+					Heightid = dto.HeightId,
+					Widthid = dto.WidthId,
+					Categoryid = dto.CategoryId,
+					Name = dto.Name,
+					Imagelink = dto.ImageLink,
+					Price = dto.Price,
+					Sold = false
+				};
+
+				await _context.Paintings.AddAsync(painting);
+				await _context.SaveChangesAsync();
+
+				// Insert into MongoDB
+
+				var mongoDoc = new BsonDocument
+				{
+					{ "ImageId", painting.Id.ToString() }, // link both DBs
+					{ "FilePath", dto.FilePath ?? "" }
+				};
+
+				await _mDb.InsertOneAsync(mongoDoc);
+
+				// Commit SQL transaction
+				await transaction.CommitAsync();
+
+				return Ok(new
+				{
+					message = "Painting created",
+					id = painting.Id
+				});
+			}
+			catch (Exception ex)
+			{
+				await transaction.RollbackAsync();
+
+				return StatusCode(500, $"Error: {ex.Message}");
+			}
+		});
 	}
 
 	[HttpPatch("{id}/edit")]

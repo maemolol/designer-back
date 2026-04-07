@@ -1,11 +1,15 @@
 namespace Dtos;
 
-public class PaintingAddDto
+public class CreatePaintingDto
 {
-    public int height_id {get; set;}
-    public int width_id {get; set;}
-    public int? category_id {get; set;}
-    public string? name {get; set;}
-    public string? image_link {get; set;}
-    public string? image_path {get; set;}
+    public int? HeightId { get; set; }
+    public int? WidthId { get; set; }
+    public int? CategoryId { get; set; }
+
+    public string? Name { get; set; }
+    public string? ImageLink { get; set; }
+    public float? Price { get; set; }
+
+    // Mongo-related
+    public string? FilePath { get; set; }
 }
