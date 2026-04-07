@@ -11,6 +11,8 @@ using MongoDB.Driver;
 using System.Text;
 using Config;
 using DotNetEnv;
+using Newtonsoft.Json;
+using Stripe;
 using Microsoft.Extensions.Configuration;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -32,6 +34,7 @@ try
     string? jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
     string? jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
     string? encryptionKey = Environment.GetEnvironmentVariable("ENCRYPTION_KEY");
+    string? stripeKey = Environment.GetEnvironmentVariable("STRIPE_KEY");
 
     void Check(string? value, string name)
     {
@@ -119,6 +122,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddMvc().AddNewtonsoftJson();
+builder.Services.AddSingleton(new StripeClient(Environment.GetEnvironmentVariable("STRIPE_KEY")));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Painting Website API", Version = "v1" });

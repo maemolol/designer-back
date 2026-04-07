@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6MM3VX561oE=",
+  "dgSpecHash": "OkWy1HHSRfU=",
   "success": true,
   "projectFilePath": "/home/maemo/designer/designer-back/backend.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,8 @@
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.http/2.3.0/microsoft.aspnetcore.http.2.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.3.0/microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.http.features/2.3.0/microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
+    "/home/maemo/.nuget/packages/microsoft.aspnetcore.jsonpatch/10.0.5/microsoft.aspnetcore.jsonpatch.10.0.5.nupkg.sha512",
+    "/home/maemo/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/10.0.5/microsoft.aspnetcore.mvc.newtonsoftjson.10.0.5.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.aspnetcore.webutilities/2.3.0/microsoft.aspnetcore.webutilities.2.3.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/microsoft.build.framework/17.8.3/microsoft.build.framework.17.8.3.nupkg.sha512",
@@ -65,6 +67,7 @@
     "/home/maemo/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/home/maemo/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/home/maemo/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/maemo/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "/home/maemo/.nuget/packages/npgsql/9.0.3/npgsql.9.0.3.nupkg.sha512",
     "/home/maemo/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.4/npgsql.entityframeworkcore.postgresql.9.0.4.nupkg.sha512",
     "/home/maemo/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
