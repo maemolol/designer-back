@@ -34,7 +34,7 @@ try
     string? jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
     string? jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
     string? encryptionKey = Environment.GetEnvironmentVariable("ENCRYPTION_KEY");
-    string? stripeKey = Environment.GetEnvironmentVariable("STRIPE_KEY");
+    string? stripeKey = Environment.GetEnvironmentVariable("STRIPE__KEY");
 
     void Check(string? value, string name)
     {
@@ -59,6 +59,7 @@ try
     Check(jwtIssuer, "JWT_ISSUER");
     Check(jwtAudience, "JWT_AUDIENCE");
     Check(encryptionKey, "ENCRYPTION_KEY");
+    Check(stripeKey, "STRIPE_KEY");
 
     Console.WriteLine($"Mongo URI: {mongoUri}");
 
@@ -123,7 +124,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMvc().AddNewtonsoftJson();
-builder.Services.AddSingleton(new StripeClient(Environment.GetEnvironmentVariable("STRIPE_KEY")));
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:Key"];
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Painting Website API", Version = "v1" });

@@ -96,6 +96,18 @@
     {
       "code": "NU1902",
       "level": "Warning",
+      "message": "Package 'MailKit' 4.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-9j88-vvj5-vhgr",
+      "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/maemo/designer/designer-back/backend.csproj",
+      "libraryId": "MailKit",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
       "message": "Package 'MimeKit' 4.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g7hc-96xr-gvvx",
       "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
       "warningLevel": 1,
