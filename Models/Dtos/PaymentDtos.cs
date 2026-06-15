@@ -11,4 +11,7 @@ public class CheckoutRequest
 
     [Required]
     public List<Guid> PaintingIds { get; set; }
+
+    [Required]
+    public string SuccessUrlBase { get; set; }
 }

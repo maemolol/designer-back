@@ -81,7 +81,22 @@ try
         opts.EnableSensitiveDataLogging(); // helpful for debugging
         opts.LogTo(Console.WriteLine, LogLevel.Debug);
     });
-    builder.Services.AddSingleton<IMongoClient>(mongoClient);
+    builder.Services.AddSingleton<IMongoClient>(sp =>
+    {
+        var uri = builder.Configuration["MONGO_URI"];
+
+        var settings = MongoClientSettings.FromConnectionString(uri);
+
+        settings.RetryWrites = true;
+        settings.RetryReads = true;
+
+        // Optional but recommended
+        settings.ServerSelectionTimeout = TimeSpan.FromSeconds(10);
+        settings.ConnectTimeout = TimeSpan.FromSeconds(10);
+        settings.SocketTimeout = TimeSpan.FromSeconds(30);
+
+        return new MongoClient(settings);
+    });
     builder.Services.AddSingleton(mongoDb);
     Console.WriteLine("✅ Usage: http://localhost:5000 and http://localhost:5000/swagger/");
 }

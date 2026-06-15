@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OkWy1HHSRfU=",
+  "dgSpecHash": "9iDRdQhA748=",
   "success": true,
   "projectFilePath": "/home/maemo/designer/designer-back/backend.csproj",
   "expectedPackageFiles": [
@@ -96,7 +96,7 @@
     {
       "code": "NU1902",
       "level": "Warning",
-      "message": "Package 'MailKit' 4.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-9j88-vvj5-vhgr",
+      "message": "Das Paket \"MailKit\" 4.15.0 weist eine bekannte Moderat Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-9j88-vvj5-vhgr.",
       "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
       "warningLevel": 1,
       "filePath": "/home/maemo/designer/designer-back/backend.csproj",
@@ -108,11 +108,35 @@
     {
       "code": "NU1902",
       "level": "Warning",
-      "message": "Package 'MimeKit' 4.15.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g7hc-96xr-gvvx",
+      "message": "Das Paket \"MimeKit\" 4.15.0 weist eine bekannte Moderat Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-g7hc-96xr-gvvx.",
       "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
       "warningLevel": 1,
       "filePath": "/home/maemo/designer/designer-back/backend.csproj",
       "libraryId": "MimeKit",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Das Paket \"SharpCompress\" 0.30.1 weist eine bekannte Moderat Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-6c8g-7p36-r338.",
+      "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/maemo/designer/designer-back/backend.csproj",
+      "libraryId": "SharpCompress",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Das Paket \"Snappier\" 1.0.0 weist eine bekannte Hoch Schweregrad-Sicherheitsanfälligkeit auf, https://github.com/advisories/GHSA-pggp-6c3x-2xmx.",
+      "projectPath": "/home/maemo/designer/designer-back/backend.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/maemo/designer/designer-back/backend.csproj",
+      "libraryId": "Snappier",
       "targetGraphs": [
         "net10.0"
       ]

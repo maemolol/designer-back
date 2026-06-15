@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
 using Dtos;
 using Models;
+using Stripe.Forwarding;
 
 namespace Controllers
 {
@@ -43,8 +44,8 @@ namespace Controllers
             var options = new SessionCreateOptions
             {
                 Mode = "payment",
-                SuccessUrl = "http://localhost:3000/success",
-                CancelUrl = "http://localhost:3000/basket",
+                SuccessUrl = $"{request.SuccessUrlBase}/success",
+                CancelUrl = $"{request.SuccessUrlBase}/basket",
                 CustomerEmail = request.Email,
                 LineItems = paintings.Select(p => new SessionLineItemOptions
                 {

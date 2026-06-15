@@ -24,13 +24,27 @@ namespace Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetImageById(string id)
         {
-            var image = await _imageCollection.Find(x => x.ImageId == id).FirstOrDefaultAsync();
+            ImageRecord? image;
+            try
+            {
+                image = await _imageCollection
+                    .Find(x => x.ImageId == id)
+                    .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                // log properly (ILogger recommended)
+                return StatusCode(503, "Image database temporarily unavailable.");
+            }
+            
             if (image == null)
             {
                 return NotFound("Image metadata not found.");
             }
 
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), image.FilePath);
+            var uploadRoot = Environment.GetEnvironmentVariable("UPLOAD_ROOT") ?? "";
+
+            var fullPath = Path.Combine(uploadRoot, image.FilePath);
             if (!System.IO.File.Exists(fullPath))
             {
                 return NotFound("Image file not found on disk.");

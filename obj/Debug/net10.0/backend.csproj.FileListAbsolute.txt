@@ -128,7 +128,6 @@
 /home/maemo/designer/designer-back/obj/Debug/net10.0/backend.pdb
 /home/maemo/designer/designer-back/obj/Debug/net10.0/backend.genruntimeconfig.cache
 /home/maemo/designer/designer-back/obj/Debug/net10.0/ref/backend.dll
-/home/maemo/designer/designer-back/bin/Debug/net10.0/.env
 /home/maemo/designer/designer-back/bin/Debug/net10.0/BouncyCastle.Cryptography.dll
 /home/maemo/designer/designer-back/bin/Debug/net10.0/MailKit.dll
 /home/maemo/designer/designer-back/bin/Debug/net10.0/MimeKit.dll
@@ -140,3 +139,4 @@
 /home/maemo/designer/designer-back/bin/Debug/net10.0/System.Configuration.ConfigurationManager.dll
 /home/maemo/designer/designer-back/bin/Debug/net10.0/System.Security.Cryptography.ProtectedData.dll
 /home/maemo/designer/designer-back/bin/Debug/net10.0/runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll
+/home/maemo/designer/designer-back/bin/Debug/net10.0/.env
